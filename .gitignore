@@ -1,0 +1,21 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Env
+.env
+.env.local
+.env.development
+.env.production
+backend/.env
+worker/.env
+frontend/.env.local
+frontend/.env
+
+# Next.js
+.next/
+out/
+
+# Logs
+logs
+*.log
