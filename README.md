@@ -3,7 +3,7 @@
 A full-stack project to track trades using lot-based FIFO matching, calculate realized PnL, and show open positions.
 
 Built with:
-Node.js + Express + PostgreSQL + Kafka + Next.js (App Router)
+Node.js , Express ,PostgreSQL ,Kafka , Next.js (App Router)
 
 🚀 Features
 
@@ -19,37 +19,14 @@ Simple UI for Trades / Positions / Realized PnL
 
 Kafka pipeline (Backend → Kafka → Worker → DB)
 
-🏗 Project Architecture
-Frontend (Next.js) → Backend API (Node.js)
-                            ↓
-                          Kafka
-                            ↓
-                    Worker (Node.js)
-                            ↓
-                      PostgreSQL
-
 🗄 Data Model
 1. trades
-
 Stores every trade entered.
 
-Column	Type	Description
-id	SERIAL PK	Unique ID
-symbol	TEXT	Stock symbol
-qty	INT	+ve = buy, -ve = sell
-price	NUMERIC	Trade price
-trade_time	TIMESTAMP	Time of trade
-created_at	TIMESTAMP	Auto timestamp
 2. open_lots
 
 Represents FIFO lots.
 
-Column	Type	Description
-id	SERIAL PK	Lot ID
-symbol	TEXT	Stock symbol
-remaining_qty	INT	Quantity left in the lot
-price	NUMERIC	Original buy price
-created_at	TIMESTAMP	When lot was created
 
 Relationship:
 
@@ -58,12 +35,6 @@ One trade can create one lot
 Sell trades update many lots (FIFO)
 
 3. realized_pnl
-Column	Type	Description
-symbol	TEXT PK	Stock symbol
-pnl	NUMERIC	Total realized profit/loss
-last_updated	TIMESTAMP	Updated on every sell
-🔄 FIFO Matching Logic (How It Works)
-BUY trade (qty > 0)
 
 Insert a new record into open_lots
 
@@ -207,19 +178,6 @@ Add database
 
 Run your schema.sql inside Railway SQL editor
 
-📌 Assumptions
-
-FIFO is required for all SELL trades
-
-One symbol's lots are independent
-
-PnL is calculated only on SELL trades
-
-No partial lot merging
-
-Trade timestamps are considered creation timestamps
-
-No short selling (qty must not exceed total lots available)
 
 🧷 Author
 
